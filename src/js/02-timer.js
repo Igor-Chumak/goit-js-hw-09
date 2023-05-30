@@ -3,12 +3,6 @@ import 'flatpickr/dist/flatpickr.min.css';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import 'notiflix/dist/notiflix-3.2.6.min.css';
-Notify.init({
-  width: '500px',
-  fontSize: '25px',
-  position: 'center-top',
-  opacity: 0.7,
-});
 
 const ref = {
   btnStart: document.querySelector('[data-start]'),
@@ -43,7 +37,12 @@ const dateInput = flatpickr(ref.input, {
   onClose(selectedDates) {
     timeStamp = selectedDates[0].getTime() - new Date().getTime();
     if (timeStamp <= 0) {
-      Notify.warning('Please choose a date in the future');
+      Notify.warning('Please choose a date in the future', {
+        width: '500px',
+        fontSize: '25px',
+        position: 'center-top',
+        opacity: 0.7,
+      });
       return selectedDates[0];
     }
     outputTimerDOM(convertMs(timeStamp));
