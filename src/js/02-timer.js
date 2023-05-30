@@ -17,7 +17,12 @@ ref.btnStart.setAttribute('disabled', '');
 ref.btnStart.addEventListener('click', () => {
   ref.btnStart.setAttribute('disabled', '');
   timerId = setInterval(() => {
-    timeStamp -= 1000;
+    if (timeStamp > 1000) {
+      timeStamp -= 1000;
+      outputTimerDOM(convertMs(timeStamp));
+    } else {
+      stopTimer();
+    }
   }, 1000);
 });
 
@@ -28,20 +33,22 @@ const dateInput = flatpickr(ref.input, {
   minuteIncrement: 1,
   onClose(selectedDates) {
     timeStamp = selectedDates[0].getTime() - new Date().getTime();
-    // console.log('cur: ', new Date().getTime());
-    // console.log('sel: ', selectedDates[0].getTime());
-    // console.log('d: ', timeStamp);
     if (timeStamp <= 0) {
       window.alert('Please choose a date in the future');
       return selectedDates[0];
     }
-    outTimerDOM(convertMs(timeStamp));
+    outputTimerDOM(convertMs(timeStamp));
 
     ref.btnStart.removeAttribute('disabled');
   },
 });
 
-function outTimerDOM({ days, hours, minutes, seconds }) {
+function stopTimer() {
+  ref.btnStart.removeAttribute('disabled');
+  clearInterval(timerId);
+}
+
+function outputTimerDOM({ days, hours, minutes, seconds }) {
   ref.dataDays.textContent = addLeadingZero(days);
   ref.dataHours.textContent = addLeadingZero(hours);
   ref.dataMinutes.textContent = addLeadingZero(minutes);
