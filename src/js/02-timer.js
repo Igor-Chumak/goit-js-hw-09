@@ -9,7 +9,17 @@ const ref = {
   dataMinutes: document.querySelector('[data-minutes]'),
   dataSeconds: document.querySelector('[data-seconds]'),
 };
+let timeStamp = 0;
+let timerId = null;
+
 ref.btnStart.setAttribute('disabled', '');
+
+ref.btnStart.addEventListener('click', () => {
+  ref.btnStart.setAttribute('disabled', '');
+  timerId = setInterval(() => {
+    timeStamp -= 1000;
+  }, 1000);
+});
 
 const dateInput = flatpickr(ref.input, {
   enableTime: true,
@@ -17,7 +27,7 @@ const dateInput = flatpickr(ref.input, {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    let timeStamp = selectedDates[0].getTime() - new Date().getTime();
+    timeStamp = selectedDates[0].getTime() - new Date().getTime();
     // console.log('cur: ', new Date().getTime());
     // console.log('sel: ', selectedDates[0].getTime());
     // console.log('d: ', timeStamp);
@@ -25,15 +35,22 @@ const dateInput = flatpickr(ref.input, {
       window.alert('Please choose a date in the future');
       return selectedDates[0];
     }
-    const { days, hours, minutes, seconds } = convertMs(timeStamp);
-    ref.dataDays.textContent = addLeadingZero(days);
-    ref.dataHours.textContent = addLeadingZero(hours);
-    ref.dataMinutes.textContent = addLeadingZero(minutes);
-    ref.dataSeconds.textContent = addLeadingZero(seconds);
+    outTimerDOM(convertMs(timeStamp));
 
     ref.btnStart.removeAttribute('disabled');
   },
 });
+
+function outTimerDOM({ days, hours, minutes, seconds }) {
+  ref.dataDays.textContent = addLeadingZero(days);
+  ref.dataHours.textContent = addLeadingZero(hours);
+  ref.dataMinutes.textContent = addLeadingZero(minutes);
+  ref.dataSeconds.textContent = addLeadingZero(seconds);
+}
+
+function addLeadingZero(value) {
+  return value > 9 ? String(value) : String(value).padStart(2, '0');
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -52,8 +69,4 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
-}
-
-function addLeadingZero(value) {
-  return value > 9 ? String(value) : String(value).padStart(2, '0');
 }
