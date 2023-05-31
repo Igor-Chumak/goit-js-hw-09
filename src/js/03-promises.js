@@ -11,10 +11,10 @@ function onSubmit(e) {
   const delayValue = refs.form.elements.delay.value;
   const stepValue = refs.form.elements.step.value;
   const amountValue = refs.form.elements.amount.value;
+  // check on 0 ?
   console.log(
     `delay: ${delayValue} step: ${stepValue}  amount: ${amountValue}`
   );
-  // check on 0 ?
 }
 
 // createPromise(2, 1500)
@@ -22,7 +22,7 @@ function onSubmit(e) {
 //     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
 //   })
 //   .catch(({ position, delay }) => {
-//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+//     console.error(`❌ Rejected promise ${position} in ${delay}ms`);
 //   });
 
 function createPromise(position, delay) {
