@@ -3,7 +3,6 @@ import 'flatpickr/dist/flatpickr.min.css';
 require('flatpickr/dist/themes/dark.css');
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import 'notiflix/dist/notiflix-3.2.6.min.css';
 
 const ref = {
   btnStart: document.querySelector('[data-start]'),
