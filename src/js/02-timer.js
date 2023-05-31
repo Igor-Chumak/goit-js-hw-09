@@ -18,8 +18,6 @@ const ref = {
 let timeStamp = 0;
 let timerId = null;
 
-console.log(ref);
-
 // below css for Timer Frame
 ref.timerFrame.style.display = 'block';
 ref.timerFrame.style.fontWeight = '100';
