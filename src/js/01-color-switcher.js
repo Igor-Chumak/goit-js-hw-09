@@ -4,7 +4,7 @@ const ref = {
 };
 let timerId = null;
 
-ref.btnStop.setAttribute('disabled', '');
+ref.btnStop.disabled = true;
 
 ref.btnStart.addEventListener('click', () => {
   ref.btnStart.setAttribute('disabled', '');
@@ -16,8 +16,8 @@ ref.btnStart.addEventListener('click', () => {
 
 ref.btnStop.addEventListener('click', () => {
   clearInterval(timerId);
-  ref.btnStart.removeAttribute('disabled');
-  ref.btnStop.setAttribute('disabled', '');
+  ref.btnStart.disabled = false;
+  ref.btnStop.disabled = true;
 });
 
 function getRandomHexColor() {
