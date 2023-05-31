@@ -4,7 +4,7 @@ require('flatpickr/dist/themes/dark.css');
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const ref = {
+const refs = {
   btnStart: document.querySelector('[data-start]'),
   timerFrame: document.querySelector('.timer'),
   timerFields: document.querySelectorAll('.field'),
@@ -19,39 +19,39 @@ let timeStamp = 0;
 let timerId = null;
 
 // below css for Timer Frame
-ref.timerFrame.style.display = 'block';
-ref.timerFrame.style.fontWeight = '100';
-ref.timerFrame.style.fontFamily = 'sans-serif';
-ref.timerFrame.style.marginTop = '50px';
-ref.timerFrame.style.color = '#fff';
-ref.timerFrame.style.textAlign = 'center';
-ref.timerFrame.style.fontSize = '100px';
+refs.timerFrame.style.display = 'block';
+refs.timerFrame.style.fontWeight = '100';
+refs.timerFrame.style.fontFamily = 'sans-serif';
+refs.timerFrame.style.marginTop = '50px';
+refs.timerFrame.style.color = '#fff';
+refs.timerFrame.style.textAlign = 'center';
+refs.timerFrame.style.fontSize = '100px';
 
-ref.timerFields.forEach(timerField => {
+refs.timerFields.forEach(timerField => {
   timerField.style.display = 'inline-block';
   timerField.style.padding = '10px';
   timerField.style.borderRadius = '5px';
   timerField.style.background = '#5a032f';
 });
 
-ref.timerValues.forEach(timerValue => {
+refs.timerValues.forEach(timerValue => {
   timerValue.style.display = 'inline-block';
   timerValue.style.padding = '15px';
   timerValue.style.borderRadius = '5px';
   timerValue.style.background = '#98034d';
 });
 
-ref.timerLabels.forEach(timerLabel => {
+refs.timerLabels.forEach(timerLabel => {
   timerLabel.style.display = 'block';
   timerLabel.style.paddingTop = '5px';
   timerLabel.style.fontSize = '16px';
 });
 // above css for Timer Frame
 
-ref.btnStart.disabled = true;
+refs.btnStart.disabled = true;
 
-ref.btnStart.addEventListener('click', () => {
-  ref.btnStart.disabled = true;
+refs.btnStart.addEventListener('click', () => {
+  refs.btnStart.disabled = true;
   timerId = setInterval(() => {
     if (timeStamp > 1000) {
       timeStamp -= 1000;
@@ -81,12 +81,12 @@ flatpickr('#datetime-picker', {
     }
     outputTimerDOM(convertMs(timeStamp));
 
-    ref.btnStart.disabled = false;
+    refs.btnStart.disabled = false;
   },
 });
 
 function stopTimer() {
-  ref.btnStart.disabled = false;
+  refs.btnStart.disabled = false;
   clearInterval(timerId);
   Notify.success('The set timer has finished its work ', {
     width: '500px',
@@ -98,10 +98,10 @@ function stopTimer() {
 }
 
 function outputTimerDOM({ days, hours, minutes, seconds }) {
-  ref.days.textContent = addLeadingZero(days);
-  ref.hours.textContent = addLeadingZero(hours);
-  ref.minutes.textContent = addLeadingZero(minutes);
-  ref.seconds.textContent = addLeadingZero(seconds);
+  refs.days.textContent = addLeadingZero(days);
+  refs.hours.textContent = addLeadingZero(hours);
+  refs.minutes.textContent = addLeadingZero(minutes);
+  refs.seconds.textContent = addLeadingZero(seconds);
 }
 
 function addLeadingZero(value) {
