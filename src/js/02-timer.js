@@ -6,6 +6,10 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const ref = {
   btnStart: document.querySelector('[data-start]'),
+  timerFrame: document.querySelector('.timer'),
+  timerFields: document.querySelectorAll('.field'),
+  timerValues: document.querySelectorAll('.value'),
+  timerLabels: document.querySelectorAll('.label'),
   days: document.querySelector('[data-days]'),
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
@@ -13,6 +17,38 @@ const ref = {
 };
 let timeStamp = 0;
 let timerId = null;
+
+console.log(ref);
+
+// below css for Timer Frame
+ref.timerFrame.style.display = 'block';
+ref.timerFrame.style.fontWeight = '100';
+ref.timerFrame.style.fontFamily = 'sans-serif';
+ref.timerFrame.style.marginTop = '50px';
+ref.timerFrame.style.color = '#fff';
+ref.timerFrame.style.textAlign = 'center';
+ref.timerFrame.style.fontSize = '100px';
+
+ref.timerFields.forEach(timerField => {
+  timerField.style.display = 'inline-block';
+  timerField.style.padding = '10px';
+  timerField.style.borderRadius = '5px';
+  timerField.style.background = '#5a032f';
+});
+
+ref.timerValues.forEach(timerValue => {
+  timerValue.style.display = 'inline-block';
+  timerValue.style.padding = '15px';
+  timerValue.style.borderRadius = '5px';
+  timerValue.style.background = '#98034d';
+});
+
+ref.timerLabels.forEach(timerLabel => {
+  timerLabel.style.display = 'block';
+  timerLabel.style.paddingTop = '5px';
+  timerLabel.style.fontSize = '16px';
+});
+// above css for Timer Frame
 
 ref.btnStart.disabled = true;
 
@@ -56,6 +92,7 @@ function stopTimer() {
   clearInterval(timerId);
   Notify.success('The set timer has finished its work ', {
     width: '500px',
+    timeout: '5000',
     fontSize: '25px',
     position: 'center-top',
     opacity: 0.7,
