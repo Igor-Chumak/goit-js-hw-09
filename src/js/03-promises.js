@@ -10,10 +10,20 @@ function onSubmit(e) {
   e.preventDefault();
   const delayValue = refs.form.elements.delay.value;
   const stepValue = refs.form.elements.step.value;
-  const stepAmount = refs.form.elements.amount.value;
-
+  const amountValue = refs.form.elements.amount.value;
+  console.log(
+    `delay: ${delayValue} step: ${stepValue}  amount: ${amountValue}`
+  );
   // check on 0 ?
 }
+
+// createPromise(2, 1500)
+//   .then(({ position, delay }) => {
+//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+//   })
+//   .catch(({ position, delay }) => {
+//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+//   });
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
