@@ -1,11 +1,11 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-Notify.init({
+const notifyWarning = {
   width: '500px',
   fontSize: '25px',
   position: 'center-top',
   opacity: 0.7,
   timeout: 1500,
-});
+};
 
 const refs = {
   form: document.querySelector('.form'),
@@ -35,17 +35,18 @@ function onSubmit(e) {
   let delay = delayValue;
   createPromise((position = 1), delay)
     .then(({ position, delay }) => {
-      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      // console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
     })
     .catch(({ position, delay }) => {
-      console.error(`❌ Rejected promise ${position} in ${delay}ms`);
+      Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      // console.error(`❌ Rejected promise ${position} in ${delay}ms`);
     })
     .finally(() => (refs.btnSubmit.disabled = false));
 }
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  // console.log(`Promise ${position} at delay ${delay} created`);
   return new Promise((resolve, rejection) => {
     console.log(`Promise ${position} at delay ${delay} created`);
     setTimeout(() => {
@@ -64,18 +65,18 @@ function checkCorrectValue({ delayValue, stepValue, amountValue }) {
   let errorAnyValue = false;
 
   if (delayValue < 0) {
-    Notify.warning('Delay cannot be less than 0');
+    Notify.warning('Delay cannot be less than 0', notifyWarning);
     errorAnyValue = true;
   }
 
   if (stepValue < 0) {
-    Notify.warning('Step cannot be less than 0');
+    Notify.warning('Step cannot be less than 0', notifyWarning);
 
     errorAnyValue = true;
   }
 
   if (amountValue < 1) {
-    Notify.warning('Amount must be more than 0');
+    Notify.warning('Amount must be more than 0', notifyWarning);
     errorAnyValue = true;
   }
 
