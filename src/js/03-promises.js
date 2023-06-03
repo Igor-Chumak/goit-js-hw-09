@@ -15,7 +15,7 @@ const refs = {
 // temporary
 refs.form.elements.delay.value = '1000';
 refs.form.elements.step.value = '1000';
-refs.form.elements.amount.value = '3';
+refs.form.elements.amount.value = '2';
 
 refs.form.addEventListener('submit', onSubmit);
 
@@ -31,25 +31,33 @@ function onSubmit(e) {
     `delay: ${delayValue} step: ${stepValue}  amount: ${amountValue}`
   );
   refs.btnSubmit.disabled = true;
-}
 
-// createPromise(2, 1500)
-//   .then(({ position, delay }) => {
-//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//   })
-//   .catch(({ position, delay }) => {
-//     console.error(`❌ Rejected promise ${position} in ${delay}ms`);
-//   });
+  let delay = delayValue;
+  createPromise((position = 1), delay)
+    .then(({ position, delay }) => {
+      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    })
+    .catch(({ position, delay }) => {
+      console.error(`❌ Rejected promise ${position} in ${delay}ms`);
+    })
+    .finally(() => (refs.btnSubmit.disabled = false));
+}
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-    Resolve(position, delay);
-  } else {
-    // Reject
-    Rejection(position, delay);
-  }
+  // console.log(`Promise ${position} at delay ${delay} created`);
+  return new Promise((resolve, rejection) => {
+    console.log(`Promise ${position} at delay ${delay} created`);
+    setTimeout(() => {
+      if (shouldResolve) {
+        // Fulfill
+        resolve({ position, delay });
+      } else {
+        // Reject
+        rejection({ position, delay });
+      }
+    }, delay);
+  });
 }
 
 function checkCorrectValue({ delayValue, stepValue, amountValue }) {
