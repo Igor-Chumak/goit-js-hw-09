@@ -15,9 +15,9 @@ const refs = {
 let numberPromisePending = 0;
 
 // initial value
-refs.form.elements.delay.value = '1000';
-refs.form.elements.step.value = '1000';
-refs.form.elements.amount.value = '3';
+// refs.form.elements.delay.value = '1000';
+// refs.form.elements.step.value = '1000';
+// refs.form.elements.amount.value = '3';
 
 refs.form.addEventListener('submit', onSubmit);
 
