@@ -4,6 +4,11 @@ const refs = {
   form: document.querySelector('.form'),
 };
 
+// temporary
+refs.form.elements.delay.value = '1000';
+refs.form.elements.step.value = '1000';
+refs.form.elements.amount.value = '3';
+
 refs.form.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
@@ -11,7 +16,14 @@ function onSubmit(e) {
   const delayValue = refs.form.elements.delay.value;
   const stepValue = refs.form.elements.step.value;
   const amountValue = refs.form.elements.amount.value;
-  // check on 0 ?
+  if (delayValue < 0 || stepValue < 0 || amountValue < 1) {
+    console.error(
+      ` ${delayValue < 0 ? 'Delay cannot be more than 0  ' : ''}${
+        stepValue < 0 ? 'Step cannot be less than 0  ' : ''
+      }${amountValue < 1 ? 'Amount must be more than 0' : ''}`
+    );
+    return;
+  }
   console.log(
     `delay: ${delayValue} step: ${stepValue}  amount: ${amountValue}`
   );
