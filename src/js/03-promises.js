@@ -12,10 +12,12 @@ const refs = {
   btnSubmit: document.querySelector('[type="submit"]'),
 };
 
+let numberPromisePending = 0;
+
 // initial value
-// refs.form.elements.delay.value = '1000';
-// refs.form.elements.step.value = '1000';
-// refs.form.elements.amount.value = '3';
+refs.form.elements.delay.value = '1000';
+refs.form.elements.step.value = '1000';
+refs.form.elements.amount.value = '3';
 
 refs.form.addEventListener('submit', onSubmit);
 
@@ -39,20 +41,24 @@ function onSubmit(e) {
 
     createPromise(position, delay)
       .then(({ position, delay }) => {
-        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
         // console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
-        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notify.failure(`Rejected promise ${position} in ${delay}ms`);
         // console.error(`❌ Rejected promise ${position} in ${delay}ms`);
       })
-      .finally(() => (refs.btnSubmit.disabled = false));
+      .finally(() => {
+        numberPromisePending -= 1;
+        refs.btnSubmit.disabled = numberPromisePending === 0 ? false : true;
+      });
   }
 }
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
   return new Promise((resolve, rejection) => {
+    numberPromisePending += 1;
     // console.log(`Promise ${position} at delay ${delay} created`);
     setTimeout(() => {
       if (shouldResolve) {
