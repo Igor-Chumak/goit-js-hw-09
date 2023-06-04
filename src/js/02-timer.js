@@ -6,6 +6,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
   btnStart: document.querySelector('[data-start]'),
+  dateTimePicker: document.querySelector('#datetime-picker'),
   timerFrame: document.querySelector('.timer'),
   timerFields: document.querySelectorAll('.field'),
   timerValues: document.querySelectorAll('.value'),
@@ -52,6 +53,7 @@ refs.btnStart.disabled = true;
 
 refs.btnStart.addEventListener('click', () => {
   refs.btnStart.disabled = true;
+  refs.dateTimePicker.disabled = true;
   timerId = setInterval(() => {
     if (timeStamp > 1000) {
       timeStamp -= 1000;
@@ -86,7 +88,8 @@ flatpickr('#datetime-picker', {
 });
 
 function stopTimer() {
-  refs.btnStart.disabled = false;
+  refs.dateTimePicker.disabled = false;
+  // refs.btnStart.disabled = false;
   clearInterval(timerId);
   Notify.success('The set timer has finished its work ', {
     width: '500px',
