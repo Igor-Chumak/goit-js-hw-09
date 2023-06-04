@@ -1,7 +1,9 @@
+// npm i flatpickr --save
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 require('flatpickr/dist/themes/dark.css');
 
+// npm i notiflix
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
