@@ -6,7 +6,9 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
   btnStart: document.querySelector('[data-start]'),
+  // below mentor's note
   dateTimePicker: document.querySelector('#datetime-picker'),
+  //
   timerFrame: document.querySelector('.timer'),
   timerFields: document.querySelectorAll('.field'),
   timerValues: document.querySelectorAll('.value'),
@@ -18,6 +20,8 @@ const refs = {
 };
 let timeStamp = 0;
 let timerId = null;
+// below mentor's note
+let selectedDatesPicker = 0;
 
 // below css for Timer Frame
 refs.timerFrame.style.display = 'block';
@@ -53,7 +57,10 @@ refs.btnStart.disabled = true;
 
 refs.btnStart.addEventListener('click', () => {
   refs.btnStart.disabled = true;
+  // below mentor's note
   refs.dateTimePicker.disabled = true;
+  timeStamp = selectedDatesPicker - new Date().getTime();
+  //
   timerId = setInterval(() => {
     if (timeStamp > 1000) {
       timeStamp -= 1000;
@@ -71,7 +78,8 @@ flatpickr('#datetime-picker', {
   minuteIncrement: 1,
 
   onClose(selectedDates) {
-    timeStamp = selectedDates[0].getTime() - new Date().getTime();
+    selectedDatesPicker = selectedDates[0].getTime();
+    timeStamp = selectedDatesPicker - new Date().getTime();
     if (timeStamp <= 0) {
       Notify.warning('Please choose a date in the future', {
         width: '500px',
@@ -81,15 +89,19 @@ flatpickr('#datetime-picker', {
       });
       return selectedDates[0];
     }
-    outputTimerDOM(convertMs(timeStamp));
-
+    // mentor's note
+    // outputTimerDOM(convertMs(timeStamp));
+    // console.log(convertMs(timeStamp));
+    //
     refs.btnStart.disabled = false;
   },
 });
 
 function stopTimer() {
+  // below mentor's note
   refs.dateTimePicker.disabled = false;
   // refs.btnStart.disabled = false;
+  //
   clearInterval(timerId);
   Notify.success('The set timer has finished its work ', {
     width: '500px',
